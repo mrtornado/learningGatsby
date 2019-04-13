@@ -1,0 +1,25 @@
+{
+  "name": "gatsby-next",
+  "version": "4.0.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "next",
+    "@material-ui/icons": "^4.0.0-alpha.1",
+    "@material-ui/styles": "next",
+    "babel-plugin-styled-components": "^1.10.0",
+    "gatsby": "^2.3.22",
+    "gatsby-plugin-layout": "^1.0.14",
+    "gatsby-plugin-react-helmet": "latest",
+    "gatsby-plugin-styled-components": "^3.0.7",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-helmet": "latest",
+    "react-router-dom": "^5.0.0",
+    "styled-components": "^4.2.0"
+  },
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve"
+  }
+}
