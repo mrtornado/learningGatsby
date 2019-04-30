@@ -1,11 +1,11 @@
-import React, { useContext, useReducer } from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
 import MuiLink from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
+import React, { useContext, useReducer } from 'react';
 import styled from 'styled-components';
-import ProTip from '../components/ProTip';
-import Link from '../components/Link';
+import Link from '../components/material/Link';
+import ProTip from '../components/material/ProTip';
 import { userContext } from '../layouts';
 
 function MadeWithLove() {
@@ -45,7 +45,7 @@ function reducer(state, action) {
 	}
 }
 
-export default function App() {
+function App() {
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const value = useContext(userContext);
 
@@ -63,7 +63,7 @@ export default function App() {
 					<MyTypo variant='h4' component='h1' gutterBottom>
 						Gatsby v4-alpha example
 					</MyTypo>
-					<Link to='/about' color='secondary'>
+					<Link to='/about' color='primary'>
 						Go to the about page
 					</Link>
 					<ProTip />
@@ -73,3 +73,5 @@ export default function App() {
 		</>
 	);
 }
+
+export default App;

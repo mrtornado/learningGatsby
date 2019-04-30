@@ -1,25 +1,31 @@
-import red from '@material-ui/core/colors/red';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 // A custom theme for this app
 const theme = createMuiTheme({
 	palette: {
 		primary: {
-			main: '#CD0000'
+			light: '#33eb91',
+			main: '#00a152',
+			dark: '#006400'
 		},
 		secondary: {
-			main: '#19857b'
+			light: '#ed4b82',
+			main: '#e91e63',
+			dark: '#a31545'
+		},
+		text: {
+			primary: '#000000',
+			secondary: '#2196f3'
 		},
 		error: {
-			main: red.A400
+			main: '#CD0000'
 		},
-		background: {
-			default: '#fff'
-		}
+		type: 'light'
 	},
 	typography: {
 		// In Japanese the characters are usually larger.
-		fontSize: 15,
+		fontFamily: 'Roboto',
+		fontSize: 16,
 		textPrimary: '#CD0000'
 	}
 });

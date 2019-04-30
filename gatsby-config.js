@@ -13,9 +13,41 @@ module.exports = {
 		// If you want to use styled components you should add the plugin here.
 		'gatsby-plugin-styled-components',
 		'gatsby-plugin-react-helmet',
-		`gatsby-plugin-layout`
+		`gatsby-plugin-layout`,
+		{
+			resolve: `gatsby-plugin-create-client-paths`,
+			options: { prefixes: [`/user/*`] }
+		},
+		{
+			resolve: `gatsby-source-mysql`,
+			options: {
+				connectionDetails: {
+					host: '176.9.56.22',
+					user: 'c0yppusr',
+					password: '123456789ypp#',
+					database: 'testypp'
+				},
+				query: 'SELECT * FROM blog',
+				idFieldName: 'id',
+				typePrefix: 'Blog'
+			}
+		},
+		{
+			resolve: `gatsby-source-mysql`,
+			options: {
+				connectionDetails: {
+					host: '176.9.56.22',
+					user: 'c0yppusr',
+					password: '123456789ypp#',
+					database: 'testypp'
+				},
+				query: 'SELECT * FROM proxy_plans',
+				idFieldName: 'id',
+				typePrefix: 'ProxyPlans'
+			}
+		}
 	],
 	siteMetadata: {
-		title: 'My page'
+		title: 'Your Private Proxy'
 	}
 };

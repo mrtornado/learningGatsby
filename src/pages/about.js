@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
 import MuiLink from '@material-ui/core/Link';
-import ProTip from '../components/ProTip';
-import Link from '../components/Link';
+import Typography from '@material-ui/core/Typography';
+import React, { useContext } from 'react';
+import Link from '../components/material/Link';
+import ProTip from '../components/material/ProTip';
 import { userContext } from '../layouts';
 
 function MadeWithLove() {
