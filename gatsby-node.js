@@ -16,7 +16,7 @@ exports.createPages = async ({ graphql, actions }) => {
 	const { createPage } = actions;
 	const result = await graphql(`
 		{
-			allBlogResults {
+			allMysqlBlog {
 				edges {
 					node {
 						id
@@ -25,7 +25,7 @@ exports.createPages = async ({ graphql, actions }) => {
 					}
 				}
 			}
-			allProxyPlansResults {
+			allMysqlProxyPlans {
 				edges {
 					node {
 						id
@@ -36,7 +36,7 @@ exports.createPages = async ({ graphql, actions }) => {
 		}
 	`);
 
-	const products = result.data.allProxyPlansResults.edges;
+	const products = result.data.allMysqlProxyPlans.edges;
 	products.forEach(({ node: products }) => {
 		createPage({
 			path: `${products.item_id}`,
@@ -45,7 +45,7 @@ exports.createPages = async ({ graphql, actions }) => {
 		});
 	});
 
-	const articles = result.data.allBlogResults.edges;
+	const articles = result.data.allMysqlBlog.edges;
 	articles.forEach(({ node: articles }) => {
 		createPage({
 			path: `blog/${articles.alias}`,

@@ -7,10 +7,10 @@ const converter = new showdown.Converter();
 export default function ArticleTemplate({ data }) {
 	return (
 		<div>
-			<h2>{data.blogResults.title}</h2>
+			<h2>{data.mysqlBlog.title}</h2>
 			<div
 				dangerouslySetInnerHTML={{
-					__html: converter.makeHtml(data.blogResults.description)
+					__html: converter.makeHtml(data.mysqlBlog.description)
 				}}
 			/>
 		</div>
@@ -19,7 +19,7 @@ export default function ArticleTemplate({ data }) {
 
 export const getArticle = graphql`
 	query ArticleTemplate($id: String!) {
-		blogResults(id: { eq: $id }) {
+		mysqlBlog(id: { eq: $id }) {
 			title
 			description
 			id

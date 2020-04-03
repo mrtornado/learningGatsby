@@ -27,23 +27,18 @@ module.exports = {
 					password: '123456789ypp#',
 					database: 'testypp'
 				},
-				query: 'SELECT * FROM blog',
-				idFieldName: 'id',
-				typePrefix: 'Blog'
-			}
-		},
-		{
-			resolve: `gatsby-source-mysql`,
-			options: {
-				connectionDetails: {
-					host: '176.9.56.22',
-					user: 'c0yppusr',
-					password: '123456789ypp#',
-					database: 'testypp'
-				},
-				query: 'SELECT * FROM proxy_plans',
-				idFieldName: 'id',
-				typePrefix: 'ProxyPlans'
+				queries: [
+					{
+						statement: 'SELECT * FROM blog',
+						idFieldName: 'id',
+						name: 'Blog'
+					},
+					{
+						statement: 'SELECT * FROM proxy_plans',
+						idFieldName: 'id',
+						name: 'ProxyPlans'
+					}
+				]
 			}
 		}
 	],

@@ -5031,13 +5031,15 @@ gatsby-source-graphql@^2.3.1:
     node-fetch "^1.7.3"
     uuid "^3.4.0"
 
-gatsby-source-mysql@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/gatsby-source-mysql/-/gatsby-source-mysql-1.0.0.tgz#0af6863fb20d3637b11693af841385d5b22e20d1"
-  integrity sha512-ET4eLktcD2NG4HAUCeJ5SEgL09jx8VZq8fcrHeCvffCF/grbBVTOOrBmDS7Uyfk85yl1nilB+U50bP/lQCL8OQ==
+gatsby-source-mysql@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/gatsby-source-mysql/-/gatsby-source-mysql-2.2.2.tgz#f4ad6f2b9c6ae832e791784c4c1c9ff4c1d96a33"
+  integrity sha512-eHyheNB5paXaHOmXpvICLG4Et5WYrFljzknnYaOkR14iOfa68g4nXWzhJNnj5Bj84xjgTAazjqQjVRs3/jYi+A==
   dependencies:
     gatsby-node-helpers "^0.3.0"
+    lodash "^4.17.15"
     mysql "^2.16.0"
+    pluralize "^7.0.0"
 
 gatsby-telemetry@^1.2.3:
   version "1.2.3"
@@ -8257,6 +8259,11 @@ pkg-up@2.0.0, pkg-up@^2.0.0:
   integrity sha1-yBmscoBZpGHKscOImivjxJoATX8=
   dependencies:
     find-up "^2.1.0"
+
+pluralize@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
+  integrity sha512-ARhBOdzS3e41FbkW/XWrTEtukqqLoK5+Z/4UeDaLuSW+39JPeFgs4gCGqsrJHVZX0fUrx//4OF0K1CUGwlIFow==
 
 pnp-webpack-plugin@^1.6.4:
   version "1.6.4"

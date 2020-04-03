@@ -4,7 +4,7 @@ import Link from '../components/material/Link';
 
 const getArticles = graphql`
 	{
-		allBlogResults {
+		allMysqlBlog {
 			edges {
 				node {
 					id
@@ -25,7 +25,7 @@ const Blog = () => {
 				<React.Fragment>
 					<h1>YPP Blog Page</h1>
 					<ul>
-						{data.allBlogResults.edges.map((document) => (
+						{data.allMysqlBlog.edges.map((document) => (
 							<li key={document.node.id}>
 								<h2>
 									<Link to={`/blog/${document.node.alias}`}>

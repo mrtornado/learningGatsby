@@ -218,7 +218,7 @@ export default function NavBar({ children }) {
 			{({ loading, error, data }) => {
 				if (loading) return 'Loading...';
 				if (error)
-					return `Error! ${error.message} Congrats you are a great hacker ! :)))`;
+					return `Error! ${error.message} Congrats you are a great hacker ! :))) Now delete your token for local storage if you want the website to work again`;
 
 				return (
 					<div className={classes.root}>
