@@ -1,4 +1,4 @@
-import decode from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
 
 export const isBrowser = () => typeof window !== 'undefined';
 
@@ -9,8 +9,9 @@ export const getUser = () =>
 
 export const isLoggedIn = () => {
 	const token = getUser();
+
 	try {
-		decode(token);
+		jwt_decode(token);
 	} catch (err) {
 		return false;
 	}
@@ -19,8 +20,12 @@ export const isLoggedIn = () => {
 };
 
 export const decodedToken = () => {
-	const user = getUser();
-	const decodedUser = decode(user);
+	try {
+		const user = getUser();
+		const decodedUser = jwt_decode(user);
 
-	return decodedUser;
+		return decodedUser;
+	} catch (err) {
+		return false;
+	}
 };

@@ -30,12 +30,12 @@ const RegisterForm = (props) => {
 							alignSelf: 'center',
 							flexDirection: 'column',
 							width: '400px',
-							backgroundImage: 'linear-gradient(to top, #8e9eab, #eef2f3)',
+							backgroundImage: 'linear-gradient(to top, #ffe259, #ffa751)',
 							borderRadius: '10px',
 							margin: '10px'
 						}}
 					>
-						<h2>Register Form</h2>
+						<h2 style={{ color: 'white' }}>Register Form</h2>
 						<Formik
 							initialValues={{
 								contact_name: '',
@@ -55,7 +55,9 @@ const RegisterForm = (props) => {
 									.then(({ data }) => {
 										setSubmitting(false);
 										resetForm();
-										setSnackMessage(`Congrats, you signed up successfuly`);
+										setSnackMessage(
+											`Congrats, you signed up successfuly. You can login now!`
+										);
 										setOpen(true);
 									})
 									.catch((error) => {

@@ -13,8 +13,15 @@ export default function Config(props) {
 
 				return (
 					<React.Fragment>
+						<div>
+							You have <b>{data.config.configProxy.length} Active</b> Proxies in
+							this config.
+						</div>
+						<br />
 						{data.config.configProxy.map((x) => (
-							<div key={x.proxy_key}>{x.ip_key.ip_address}</div>
+							<div key={x.proxy_key}>
+								{x.ip_key.ip_address}:{data.config.proxy_port}
+							</div>
 						))}
 					</React.Fragment>
 				);

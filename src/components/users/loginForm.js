@@ -30,12 +30,12 @@ const LoginForm = (props) => {
 							alignSelf: 'center',
 							flexDirection: 'column',
 							width: '400px',
-							backgroundImage: 'linear-gradient(to top, #8e9eab, #eef2f3)',
+							backgroundImage: 'linear-gradient(to right, #ffe259, #ffa751)',
 							borderRadius: '10px',
 							margin: '10px'
 						}}
 					>
-						<h2>Login Form</h2>
+						<h2 style={{ color: 'white' }}>Login Form</h2>
 						<Formik
 							initialValues={{
 								username: '',

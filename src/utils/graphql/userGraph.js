@@ -26,6 +26,14 @@ export const LOGIN_USER = gql`
 	}
 `;
 
+export const ME = gql`
+	query configsUser {
+		me {
+			username
+		}
+	}
+`;
+
 export const CONFIGS_USER = gql`
 	query configsUser {
 		me {
@@ -33,6 +41,12 @@ export const CONFIGS_USER = gql`
 			config {
 				config_name
 				config_key
+				configProxy {
+					proxy_key
+					ip_key {
+						ip_address
+					}
+				}
 				subscr {
 					subscr_id
 					subscr_key
@@ -52,6 +66,7 @@ export const CONFIG_USER = gql`
 	query Proxies($config_key: Int!) {
 		config(config_key: $config_key) {
 			config_name
+			proxy_port
 			configProxy {
 				proxy_key
 				ip_key {

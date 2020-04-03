@@ -2,18 +2,17 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import MuiLink from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import React, { useContext, useReducer } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Link from '../components/material/Link';
 import ProTip from '../components/material/ProTip';
-import { userContext } from '../layouts';
 
 function MadeWithLove() {
 	return (
 		<Typography variant='body2' color='textSecondary' align='center'>
 			{'Built with love by the '}
-			<MuiLink color='inherit' href='https://material-ui.com/'>
-				Material-UI
+			<MuiLink color='inherit' href='https://www.yourprivateproxy.com/'>
+				YPP
 			</MuiLink>
 			{' team.'}
 		</Typography>
@@ -24,40 +23,9 @@ const MyTypo = styled(Typography)`
 	font-size: 22px;
 `;
 
-const initialState = {
-	count: 0
-};
-
-function reducer(state, action) {
-	switch (action.type) {
-		case 'increment':
-			return {
-				count: state.count + 1
-			};
-		case 'decrement':
-			return {
-				count: state.count - 1
-			};
-		case 'reset':
-			return initialState;
-		default:
-			return initialState;
-	}
-}
-
 function App() {
-	const [state, dispatch] = useReducer(reducer, initialState);
-	const value = useContext(userContext);
-
 	return (
-		<>
-			<div>
-				Count: {state.count}
-				<button onClick={() => dispatch({ type: 'increment' })}>+</button>
-				<button onClick={() => dispatch({ type: 'decrement' })}>-</button>
-				<button onClick={() => dispatch({ type: 'reset' })}>Reset</button>
-				<div>Hello, {value}</div>
-			</div>
+		<React.Fragment>
 			<Container maxWidth='sm'>
 				<Box my={4}>
 					<MyTypo variant='h4' component='h1' gutterBottom>
@@ -70,7 +38,7 @@ function App() {
 					<MadeWithLove />
 				</Box>
 			</Container>
-		</>
+		</React.Fragment>
 	);
 }
 
