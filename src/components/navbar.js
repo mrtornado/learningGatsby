@@ -218,7 +218,7 @@ export default function NavBar({ children }) {
 			{({ loading, error, data }) => {
 				if (loading) return 'Loading...';
 				if (error)
-					return `Error! ${error.message}, YES !! you are a hacker :))))`;
+					return `Error! ${error.message} Congrats you are a great hacker ! :)))`;
 
 				return (
 					<div className={classes.root}>

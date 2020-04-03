@@ -11,11 +11,12 @@ const Profile = () => {
 			<Query query={ME}>
 				{({ loading, error, data }) => {
 					if (loading) return 'Loading...';
-					if (error) return `Error! ${error.message}`;
+					if (error)
+						return `Error! ${error.message}. Congrats you are a great hacker !! :))))`;
 
 					return (
 						<div>
-							<h2> Hello Admin from {data.me.username}</h2>
+							<h2> Hello it's me ! {data.me.username}</h2>
 						</div>
 					);
 				}}
