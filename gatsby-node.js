@@ -39,9 +39,9 @@ exports.createPages = async ({ graphql, actions }) => {
 	const products = result.data.allMysqlProxyPlans.edges;
 	products.forEach(({ node: products }) => {
 		createPage({
-			path: `${products.item_id}`,
+			path: `buy-private-proxies/${products.item_id}`,
 			component: ProductTemplate,
-			context: { id: products.id }
+			context: { id: products.id },
 		});
 	});
 
@@ -51,7 +51,7 @@ exports.createPages = async ({ graphql, actions }) => {
 			path: `blog/${articles.alias}`,
 			// Don't forget to add constant up for path
 			component: ArticleTemplate,
-			context: { id: articles.id }
+			context: { id: articles.id },
 		});
 	});
 };

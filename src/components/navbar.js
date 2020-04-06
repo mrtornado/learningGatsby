@@ -17,13 +17,15 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import { navigate } from 'gatsby';
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Query } from 'react-apollo';
 import { FaEnvelope, FaGlobeAmericas, FaUserAstronaut } from 'react-icons/fa';
 import styled from 'styled-components';
 import Link from '../components/material/Link';
 import { decodedToken, isLoggedIn } from '../utils/auth';
 import { ME } from '../utils/graphql/userGraph';
+import ShoppingCartRoundedIcon from '@material-ui/icons/ShoppingCartRounded';
+import { CartContext } from '../components/store/cartContext';
 
 const drawerWidth = 180;
 
@@ -36,99 +38,99 @@ const StyledDrawer = styled(Drawer)`
 const useStyles = makeStyles((theme) => ({
 	'@global': {
 		body: {
-			backgroundColor: theme.palette.common.white
+			backgroundColor: theme.palette.common.white,
 		},
 		ul: {
 			margin: 0,
-			padding: 0
+			padding: 0,
 		},
 		li: {
-			listStyle: 'none'
-		}
+			listStyle: 'none',
+		},
 	},
 	root: {
-		display: 'flex'
+		display: 'flex',
 	},
 	appBar: {
 		borderBottom: `1px solid ${theme.palette.divider}`,
 		zIndex: theme.zIndex.drawer + 1,
 		transition: theme.transitions.create(['width', 'margin'], {
 			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen
-		})
+			duration: theme.transitions.duration.leavingScreen,
+		}),
 	},
 	appBarShift: {
 		marginLeft: drawerWidth,
 		width: `calc(100% - ${drawerWidth}px)`,
 		transition: theme.transitions.create(['width', 'margin'], {
 			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen
-		})
+			duration: theme.transitions.duration.enteringScreen,
+		}),
 	},
 
 	menuButton: {
-		marginRight: 36
+		marginRight: 36,
 	},
 	hide: {
-		display: 'none'
+		display: 'none',
 	},
 	drawer: {
 		width: drawerWidth,
 		flexShrink: 0,
-		whiteSpace: 'nowrap'
+		whiteSpace: 'nowrap',
 	},
 	drawerOpen: {
 		width: drawerWidth,
 		transition: theme.transitions.create('width', {
 			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen
-		})
+			duration: theme.transitions.duration.enteringScreen,
+		}),
 	},
 	drawerClose: {
 		transition: theme.transitions.create('width', {
 			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen
+			duration: theme.transitions.duration.leavingScreen,
 		}),
 		overflowX: 'hidden',
 		width: theme.spacing(7) + 1,
 		[theme.breakpoints.up('sm')]: {
-			width: theme.spacing(9) + 1
-		}
+			width: theme.spacing(9) + 1,
+		},
 	},
 	toolbar: {
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'flex-end',
 		padding: '0 8px',
-		...theme.mixins.toolbar
+		...theme.mixins.toolbar,
 	},
 	content: {
 		flexGrow: 1,
-		padding: theme.spacing(3)
+		padding: theme.spacing(3),
 	},
 	toolbarTitle: {
 		flexGrow: 1,
 		[theme.breakpoints.up('md')]: {
-			justifySelf: 'auto'
-		}
+			justifySelf: 'auto',
+		},
 	},
 	link: {
 		margin: theme.spacing(1, 1.5),
 		display: 'none',
 		[theme.breakpoints.up('md')]: {
-			display: 'inline-block'
-		}
+			display: 'inline-block',
+		},
 	},
 	iconButton: {
 		margin: theme.spacing(1, 1.5),
 		display: 'none',
 		[theme.breakpoints.down('sm')]: {
-			display: 'inline-block'
-		}
+			display: 'inline-block',
+		},
 	},
 	heroContent: {
-		padding: theme.spacing(8, 0, 6)
-	}
+		padding: theme.spacing(8, 0, 6),
+	},
 }));
 
 function removeToken() {
@@ -139,6 +141,7 @@ export default function NavBar({ children }) {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
+	const [cart] = useContext(CartContext);
 
 	function handleDrawerOpen() {
 		setOpen(true);
@@ -225,13 +228,13 @@ export default function NavBar({ children }) {
 						<CssBaseline />
 						<AppBar
 							style={{
-								backgroundImage: 'linear-gradient(to left, #ffe259, #ffa751)'
+								backgroundImage: 'linear-gradient(to left, #ffe259, #ffa751)',
 							}}
 							position='fixed'
 							color='default'
 							elevation={0}
 							className={clsx(classes.appBar, {
-								[classes.appBarShift]: open
+								[classes.appBarShift]: open,
 							})}
 						>
 							<Toolbar className={classes.toolbar}>
@@ -242,7 +245,7 @@ export default function NavBar({ children }) {
 										onClick={handleDrawerOpen}
 										edge='start'
 										className={clsx(classes.menuButton, {
-											[classes.hide]: open
+											[classes.hide]: open,
 										})}
 									>
 										<MenuIcon />
@@ -262,6 +265,21 @@ export default function NavBar({ children }) {
 								</Typography>
 
 								<nav>
+									<Button
+										onClick={(event) => {
+											event.preventDefault();
+											navigate('/cart');
+										}}
+										color='secondary'
+										variant='outlined'
+										className={classes.link}
+									>
+										<CartContainer>
+											<Badge badgeContent={cart.length} color='secondary'>
+												<ShoppingCartRoundedIcon />
+											</Badge>
+										</CartContainer>
+									</Button>
 									<Link
 										to='/buy-private-proxies'
 										variant='button'
@@ -357,13 +375,13 @@ export default function NavBar({ children }) {
 								variant='permanent'
 								className={clsx(classes.drawer, {
 									[classes.drawerOpen]: open,
-									[classes.drawerClose]: !open
+									[classes.drawerClose]: !open,
 								})}
 								classes={{
 									paper: clsx({
 										[classes.drawerOpen]: open,
-										[classes.drawerClose]: !open
-									})
+										[classes.drawerClose]: !open,
+									}),
 								}}
 								open={open}
 							>
@@ -389,3 +407,7 @@ export default function NavBar({ children }) {
 		</Query>
 	);
 }
+
+const CartContainer = styled.div`
+	margin-top: 7px;
+`;

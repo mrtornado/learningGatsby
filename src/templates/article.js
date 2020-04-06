@@ -10,7 +10,7 @@ export default function ArticleTemplate({ data }) {
 			<h2>{data.mysqlBlog.title}</h2>
 			<div
 				dangerouslySetInnerHTML={{
-					__html: converter.makeHtml(data.mysqlBlog.description)
+					__html: converter.makeHtml(data.mysqlBlog.description),
 				}}
 			/>
 		</div>
