@@ -141,7 +141,8 @@ export default function NavBar({ children }) {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
-	const [cart] = useContext(CartContext);
+	const { cartState } = useContext(CartContext);
+	const [cart] = cartState;
 
 	function handleDrawerOpen() {
 		setOpen(true);

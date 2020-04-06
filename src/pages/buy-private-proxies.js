@@ -11,6 +11,7 @@ const getProducts = graphql`
 			edges {
 				node {
 					id
+					mysqlId
 					title
 					price
 					description
@@ -22,13 +23,14 @@ const getProducts = graphql`
 `;
 
 const BuyProxies = () => {
-	const [cart, setCart] = useContext(CartContext);
-	console.log(cart);
+	const { cartState } = useContext(CartContext);
+	const [cart, setCart] = cartState;
 
-	const addToCart = (price, title) => {
+	const addToCart = (price, title, id) => {
 		const product = {
 			price,
 			title,
+			id,
 		};
 
 		setCart((currentCart) => [...currentCart, product]);
@@ -51,7 +53,11 @@ const BuyProxies = () => {
 									<p>Price: ${document.node.price}</p>
 									<button
 										onClick={() =>
-											addToCart(document.node.price, document.node.title)
+											addToCart(
+												document.node.price,
+												document.node.title,
+												document.node.mysqlId
+											)
 										}
 									>
 										Add to cart
