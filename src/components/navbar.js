@@ -142,8 +142,21 @@ export default function NavBar({ children }) {
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
 	const { cartState } = useContext(CartContext);
-	const [cart] = cartState;
+	// eslint-disable-next-line
+	const [cart, setCart] = cartState;
 
+	React.useEffect(() => {
+		const data = localStorage.getItem('lsCart');
+		if (data) {
+			setCart(JSON.parse(data));
+		}
+	}, [setCart]);
+
+	React.useEffect(() => {
+		window.localStorage.setItem('lsCart', JSON.stringify(cart));
+	});
+
+	const totalItems = cart.reduce((acc, x) => acc + x.quantity, 0);
 	function handleDrawerOpen() {
 		setOpen(true);
 	}
@@ -276,7 +289,7 @@ export default function NavBar({ children }) {
 										className={classes.link}
 									>
 										<CartContainer>
-											<Badge badgeContent={cart.length} color='secondary'>
+											<Badge badgeContent={totalItems} color='secondary'>
 												<ShoppingCartRoundedIcon />
 											</Badge>
 										</CartContainer>

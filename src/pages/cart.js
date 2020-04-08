@@ -1,57 +1,141 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { CartContext } from '../components/store/cartContext';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import { Link } from 'gatsby';
+import { Button } from '@material-ui/core';
 
-const Cart = () => {
+const useStyles = makeStyles((theme) => ({
+	root: {
+		flexGrow: 1,
+	},
+	paper: {
+		padding: theme.spacing(2),
+		textAlign: 'center',
+		color: theme.palette.text.secondary,
+	},
+}));
+
+const Cart = ({ location }) => {
 	const { cartState } = useContext(CartContext);
-	const [cart] = cartState;
+	// eslint-disable-next-line
+	const [cart, setCart] = cartState;
+	// eslist-disable-next-line
+	const [setCount] = useState(0);
 
-	const totalPrice = cart.reduce(
-		(acc, currentCart) => acc + currentCart.price,
-		0
-	);
+	const totalPrice = cart.reduce((acc, x) => {
+		const price = x.quantity * x.price;
+		return acc + price;
+	}, 0);
 
-	// Counting how many duplicate products we have and list only unique products
-	const count = [
-		...cart
-			.reduce((mp, o) => {
-				if (!mp.has(o.id)) mp.set(o.id, { ...o, count: 0 });
-				mp.get(o.id).count++;
-				return mp;
-			}, new Map())
-			.values(),
-	];
+	const totalItems = cart.reduce((acc, x) => acc + x.quantity, 0);
 
-	const products = count.map((x) => {
-		const price = x.price * x.count;
+	const addItem = (id) => {
+		setCart((prevCart) =>
+			cart.map((x) => {
+				if (x.id !== id) return x;
+				const itemIndex = prevCart.findIndex((x) => x.id === id);
+				return { ...x, quantity: prevCart[itemIndex].quantity + 1 };
+			})
+		);
+	};
+
+	const substractItem = (id) => {
+		setCart((prevCart) =>
+			cart.map((x) => {
+				if (x.id === id && x.quantity === 1) return setCart(prevCart);
+				if (x.id !== id) return x;
+				const itemIndex = prevCart.findIndex((x) => x.id === id);
+				return { ...x, quantity: prevCart[itemIndex].quantity - 1 };
+			})
+		);
+	};
+
+	const deleteItem = (id) => {
+		setCart((list) => list.filter((x) => x.id !== id));
+	};
+
+	const classes = useStyles();
+	const products = cart.map((x) => {
+		const price = x.price * x.quantity;
+
 		return (
-			<p key={x.id}>
-				{x.title} x {x.count} Price: <b>${price}</b>
-			</p>
+			<div key={x.id} className={classes.root}>
+				<Grid container spacing={0}>
+					<Grid item xs={3}>
+						<Paper square elevation={0} className={classes.paper}>
+							{x.title}
+						</Paper>
+					</Grid>
+					<Grid item xs={3}>
+						<Paper square elevation={0} className={classes.paper}>
+							<button onClick={() => substractItem(x.id)}>-</button>{' '}
+							{x.quantity} <button onClick={() => addItem(x.id)}>+</button>
+							<span>
+								<button onClick={() => deleteItem(x.id)}>X</button>
+							</span>
+						</Paper>
+					</Grid>
+					<Grid item xs={3}>
+						<Paper square elevation={0} className={classes.paper}>
+							${Math.round(price * 100) / 100}
+						</Paper>
+					</Grid>
+				</Grid>
+			</div>
 		);
 	});
 
-	// Listing only unique products
-	// let products = [];
-	// for (var i = 0, len = cart.length; i < len; i++) {
-	// 	if (products.indexOf(cart[i].title) > -1) {
-	// 	} else {
-	// 		products.push(cart[i].title);
-	// 	}
-	// }
-	// console.log(products);
+	const Checkout = () => {
+		if (cart.price !== 0) {
+			return (
+				<Link to={`/checkout/`} state={{ checkout: location }}>
+					<Button variant='text' color='primary'>
+						Checkout
+					</Button>
+				</Link>
+			);
+		}
+		return null;
+	};
 
-	// const productName = [...new Set(cart)];
-
-	// const productName = cart.map((x) => x.title);
-	// console.log(productName);
 	return (
 		<div>
-			<span>items: {cart.length}</span>
-			<br />
+			<Grid container spacing={3}>
+				<Grid item xs={3}>
+					<Paper className={classes.paper}>Product</Paper>
+				</Grid>
+				<Grid item xs={3}>
+					<Paper className={classes.paper}>Quantity</Paper>
+				</Grid>
+				<Grid item xs={3}>
+					<Paper className={classes.paper}>Price</Paper>
+				</Grid>
+			</Grid>
 			<span>{products}</span>
-			<span>
-				Total Price: <b>${Math.round(totalPrice * 100) / 100} </b>
-			</span>
+			<Grid container spacing={3}>
+				<Grid item xs={3}>
+					<Paper elevation={0} className={classes.paper}></Paper>
+				</Grid>
+				<Grid item xs={3}>
+					<Paper elevation={0} className={classes.paper}>
+						Total items: {totalItems}
+					</Paper>
+				</Grid>
+				<Grid item xs={3}>
+					<Paper elevation={0} className={classes.paper}>
+						{' '}
+						Total Price: <b>${Math.round(totalPrice * 100) / 100} </b>
+						<br />
+						<Checkout />
+					</Paper>
+				</Grid>
+			</Grid>
+			<span></span>
+			<br />
+			<span></span>
+			<div></div>
 		</div>
 	);
 };

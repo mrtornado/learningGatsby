@@ -20,7 +20,7 @@ function TabContainer(props) {
 }
 
 TabContainer.propTypes = {
-	children: PropTypes.node.isRequired
+	children: PropTypes.node.isRequired,
 };
 
 function LinkTab(props) {
@@ -32,8 +32,8 @@ function LinkTab(props) {
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
-		backgroundColor: theme.palette.background.paper
-	}
+		backgroundColor: theme.palette.background.paper,
+	},
 }));
 
 function Login() {
@@ -58,7 +58,7 @@ function Login() {
 					width: '400px',
 					borderRadius: '10px',
 					margin: '0 auto',
-					marginTop: '20px'
+					marginTop: '20px',
 				}}
 			>
 				<AppBar position='static' color='secondary'>
