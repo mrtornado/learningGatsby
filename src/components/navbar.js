@@ -171,18 +171,18 @@ export default function NavBar({ children }) {
 	if (decoded.member_type === 'admin') {
 		leftNavBar = (
 			<List>
-				<ListItem button onClick={() => navigate('/user/profile')}>
+				<ListItem button onClick={() => navigate('/admin/users')}>
 					<ListItemIcon>
 						<FaUserAstronaut style={{ color: '#2196f3', fontSize: '30' }} />
 					</ListItemIcon>
-					<ListItemText style={{ color: '#e91e63' }} primary='Sugi' />
+					<ListItemText style={{ color: '#e91e63' }} primary='Users' />
 				</ListItem>
 
 				<ListItem button>
 					<ListItemIcon>
 						<FaGlobeAmericas style={{ color: '#2196f3', fontSize: '30' }} />
 					</ListItemIcon>
-					<ListItemText style={{ color: '#e91e63' }} primary='Pula' />
+					<ListItemText style={{ color: '#e91e63' }} primary='Machines' />
 				</ListItem>
 
 				<ListItem button>

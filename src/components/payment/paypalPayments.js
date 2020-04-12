@@ -4,13 +4,11 @@ import { CartContext } from '../store/cartContext';
 import { navigate } from 'gatsby';
 
 export const ShowPaypalOneTimePayment = () => {
-	const { cartState } = useContext(CartContext);
+	const { cartState, totalPriceState } = useContext(CartContext);
+	// eslint-ignore-next-line
 	const [cart, setCart] = cartState;
+	const [totalPrice] = totalPriceState;
 
-	const totalPrice = cart.reduce(
-		(acc, currentCart) => acc + currentCart.price,
-		0
-	);
 	if (totalPrice !== 0) {
 		return (
 			<PayPalButton

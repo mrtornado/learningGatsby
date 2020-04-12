@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { CartContext } from '../components/store/cartContext';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -18,13 +18,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Cart = ({ location }) => {
-	const { cartState } = useContext(CartContext);
-	// eslint-disable-next-line
+	const { cartState, totalPriceState } = useContext(CartContext);
 	const [cart, setCart] = cartState;
-	// eslist-disable-next-line
-	const [setCount] = useState(0);
+	const [totalPrice, setTotalPrice] = totalPriceState;
 
-	const totalPrice = cart.reduce((acc, x) => {
+	React.useEffect(() => {
+		setTotalPrice(xPrice);
+	});
+
+	const xPrice = cart.reduce((acc, x) => {
 		const price = x.quantity * x.price;
 		return acc + price;
 	}, 0);

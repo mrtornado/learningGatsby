@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { CartContext } from '../store/cartContext';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
@@ -35,6 +36,8 @@ function PaymentMethod() {
 	const classes = useStyles();
 	// getModalStyle is not a pure function, we roll the style only on the first render
 	const [modalStyle] = React.useState(getModalStyle);
+	const { totalPriceState } = useContext(CartContext);
+	const [totalPrice] = totalPriceState;
 	const [open, setOpen] = React.useState(false);
 
 	const handleOpen = () => {
@@ -44,14 +47,6 @@ function PaymentMethod() {
 	const handleClose = () => {
 		setOpen(false);
 	};
-
-	const xcart = localStorage.getItem('lsCart');
-	const cart = JSON.parse(xcart);
-
-	const totalPrice = cart.reduce((acc, x) => {
-		const price = x.quantity * x.price;
-		return acc + price;
-	}, 0);
 
 	const body = (
 		<div style={modalStyle} className={classes.paper}>
@@ -84,7 +79,7 @@ function PaymentMethod() {
 		<div>
 			<div>
 				<Button variant='contained' color='primary' onClick={handleOpen}>
-					Simple Modal One Time Payment
+					One Time Payment
 				</Button>
 			</div>
 			<Modal

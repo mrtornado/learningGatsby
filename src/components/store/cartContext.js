@@ -13,11 +13,14 @@ export const CartContext = React.createContext();
 
 export const CartProvider = (props) => {
 	const [cart, setCart] = useState([]);
-	const [inCart, setInCart] = useState(false);
+	const [totalPrice, setTotalPrice] = React.useState();
 
 	return (
 		<CartContext.Provider
-			value={{ cartState: [cart, setCart], inCartState: [inCart, setInCart] }}
+			value={{
+				cartState: [cart, setCart],
+				totalPriceState: [totalPrice, setTotalPrice],
+			}}
 		>
 			{props.children}
 		</CartContext.Provider>

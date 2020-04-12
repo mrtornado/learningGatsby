@@ -34,7 +34,7 @@ export default function AnimatedModal() {
 	return (
 		<div>
 			<Button variant='contained' color='secondary' onClick={handleOpen}>
-				Open Animated Subscription Modal
+				Subscription Payment
 			</Button>
 
 			<Modal

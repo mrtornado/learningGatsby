@@ -5,7 +5,7 @@ import { createHttpLink } from 'apollo-link-http';
 import 'isomorphic-fetch';
 
 const httpLink = createHttpLink({
-	uri: 'http://localhost:4000/graphql'
+	uri: 'http://localhost:4000/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -16,12 +16,12 @@ const authLink = setContext((_, { headers }) => {
 	return {
 		headers: {
 			...headers,
-			'x-auth-token': token ? `${token}` : ''
-		}
+			'x-auth-token': token ? `${token}` : '',
+		},
 	};
 });
 
 export const client = new ApolloClient({
 	link: authLink.concat(httpLink),
-	cache: new InMemoryCache()
+	cache: new InMemoryCache(),
 });
