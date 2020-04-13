@@ -18,7 +18,7 @@ const UserEdit = (props) => {
 		<React.Fragment>
 			<div>
 				<AddConfig id={key} />
-				<h3>Your Active subscriptions:</h3>
+				<h3>Active subscriptions:</h3>
 				<div>
 					{data.member.config.map((cfg) => {
 						const postFilter = cfg.subscr[0].subscrTxn.filter(
@@ -31,7 +31,7 @@ const UserEdit = (props) => {
 						if (endtime > date) {
 							return (
 								<div key={cfg.config_key}>
-									<Link to={`/user/${cfg.config_key}`}>
+									<Link to={`/admin/users/${key}/${cfg.config_key}`}>
 										{' '}
 										{cfg.config_name}{' '}
 									</Link>{' '}
@@ -44,7 +44,7 @@ const UserEdit = (props) => {
 						}
 					})}
 				</div>
-				<h3>Your Expired subscriptions:</h3>
+				<h3>Expired subscriptions:</h3>
 				<div>
 					{data.member.config.map((cfg) => {
 						const postFilter = cfg.subscr[0].subscrTxn.filter(

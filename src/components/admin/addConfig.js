@@ -8,7 +8,11 @@ import Select from 'react-select';
 import { Mutation } from 'react-apollo';
 import DropdownTreeSelect from 'react-dropdown-tree-select';
 import '../../utils/data/locations.css';
-import data from '../../utils/data/locations';
+import {
+	dedicatedLocations,
+	businessLocations,
+	trialLocations,
+} from '../../utils/data/locations';
 import { useStaticQuery, graphql } from 'gatsby';
 import _ from 'lodash';
 import { ADD_CONFIG } from '../../utils/graphql/adminGraph';
@@ -16,7 +20,7 @@ import { ADD_CONFIG } from '../../utils/graphql/adminGraph';
 const useStyles = makeStyles((theme) => ({
 	modal: {
 		display: 'flex',
-		alignItems: 'center',
+		alignItems: 'top',
 		justifyContent: 'center',
 	},
 	paper: {
@@ -47,6 +51,10 @@ export default function AddConfig(props) {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const [proxyCount, setProxyCount] = React.useState({});
+	const [proxyPlan, setProxyPlan] = React.useState(); // residential or dedicated or trial
+	const [locationVariant, setLocationVariant] = React.useState(
+		businessLocations
+	); // display locations taking in consideration proxyPlan state
 	const [locations, setLocations] = React.useState();
 
 	const plansName = plans.map((x) => x.button_name);
@@ -56,8 +64,6 @@ export default function AddConfig(props) {
 	const label = plansName.map((x) => ({ label: x }));
 
 	const mergeData = _.merge([], values, label);
-
-	console.log(mergeData);
 
 	const customStyles = {
 		container: (base) => ({
@@ -75,15 +81,29 @@ export default function AddConfig(props) {
 	};
 
 	const onChange = (currentNode, selectedNodes) => {
-		console.log(selectedNodes);
+		const loc = selectedNodes.map((x) => x.value).join(',');
+		console.log(loc);
 	};
 
-	const handleChange = (e) => {
-		setProxyCount(parseInt(e.value));
-	};
+	const handleChange = async (e) => {
+		await setProxyCount(parseInt(e.value));
+		const dedicated = e.label.includes('Dedicated');
+		const trial = e.label.includes('Trial');
+		const residential = e.label.includes('Residential');
 
-	const handleSave = () => {
-		console.log('hello from handle save');
+		if (trial === true) {
+			await setProxyPlan('trial');
+			await setLocationVariant(trialLocations);
+		}
+		if (dedicated === true) {
+			await setProxyPlan('dedicated');
+			await setLocationVariant(dedicatedLocations);
+		}
+
+		if (residential === true) {
+			await setProxyPlan('residential');
+			await setLocationVariant(businessLocations);
+		}
 	};
 
 	return (
@@ -110,7 +130,6 @@ export default function AddConfig(props) {
 			>
 				<Fade in={open}>
 					<div className={classes.paper}>
-						<DropdownTreeSelect data={data} onChange={onChange} />
 						<Select
 							options={mergeData}
 							placeholder='select plan'
@@ -120,9 +139,15 @@ export default function AddConfig(props) {
 							styles={customStyles}
 						/>
 						<br />
+						<DropdownTreeSelect data={locationVariant} onChange={onChange} />
+						<br />
 						<Mutation
 							mutation={ADD_CONFIG}
-							variables={{ userId: userId, proxy_count: proxyCount }}
+							variables={{
+								userId: userId,
+								proxy_count: proxyCount,
+								locations: locations,
+							}}
 						>
 							{(addConfig) => (
 								<Button

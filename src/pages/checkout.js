@@ -8,6 +8,9 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import { CartContext } from '../components/store/cartContext';
+import DropdownTreeSelect from 'react-dropdown-tree-select';
+import { trialLocations } from '../utils/data/locations';
+import Select from 'react-select';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -20,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 	paper: {
 		padding: theme.spacing(2),
 		textAlign: 'center',
-		color: theme.palette.text.secondary,
+		color: theme.palette.text.primary,
 	},
 }));
 
@@ -46,12 +49,10 @@ const period = [
 const Checkout = ({ location }) => {
 	const loginUser = isLoggedIn();
 	const { cartState, totalPriceState } = useContext(CartContext);
-
-	// eslint-ignore-next-line
+	//eslint-ignore-next-line
 	const [cart, setCart] = cartState;
 	const [totalPrice, setTotalPrice] = totalPriceState;
-
-	const [currency, setCurrency] = React.useState('');
+	const [currency, setCurrency] = React.useState(''); // event.targe.value & months
 
 	const handleChange = (event) => {
 		setCurrency(event.target.value);
@@ -84,6 +85,18 @@ const Checkout = ({ location }) => {
 	}, [xPrice, setTotalPrice]);
 
 	const totalItems = cart.reduce((acc, x) => acc + x.quantity, 0);
+
+	const handleChangeLocations = (currentNode, selectedNodes) => {
+		console.log('changed locations');
+	};
+
+	const handleChangeProxyType = () => {
+		console.log('changed proxy type');
+	};
+
+	const handleChangeAuth = () => {
+		console.log('change auth');
+	};
 
 	const products = cart.map((x) => {
 		const price = x.price * x.quantity;
@@ -149,7 +162,7 @@ const Checkout = ({ location }) => {
 						<TextField
 							id='standard-select-currency'
 							select
-							label='Select'
+							label='Select Payment Period'
 							value={currency}
 							onChange={handleChange}
 							helperText='Select on what period you want to pay'
@@ -164,8 +177,37 @@ const Checkout = ({ location }) => {
 				</form>
 
 				{currency && totalPrice !== 0 ? (
-					<PaymentMethod />
+					<React.Fragment>
+						<link
+							href='https://unpkg.com/react-dropdown-tree-select/dist/styles.css'
+							rel='stylesheet'
+						/>
+						<div>Choose locations</div>
+						<Select
+							options={[
+								{ value: 1, label: 'https' },
+								{ value: 2, label: 'socks5' },
+							]}
+							placeholder='Select Proxy Format'
+							simpleValue={false}
+							onChange={handleChangeProxyType}
+						/>
+						<Select
+							options={[
+								{ value: 1, label: 'username and password' },
+								{ value: 2, label: 'ip authentification' },
+							]}
+							placeholder='Select Proxy Authentication'
+							simpleValue={false}
+							onChange={handleChangeAuth}
+						/>
+						<DropdownTreeSelect
+							data={trialLocations}
+							onChange={handleChangeLocations}
+						/>
+					</React.Fragment>
 				) : (
+					// <PaymentMethod />
 					<h2>Get great discounts when paying for more then just 1 month ! </h2>
 				)}
 			</React.Fragment>

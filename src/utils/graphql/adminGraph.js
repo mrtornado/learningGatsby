@@ -46,8 +46,12 @@ export const USER_EDIT = gql`
 `;
 
 export const ADD_CONFIG = gql`
-	mutation addConfig($userId: Int!, $proxy_count: Int!) {
-		addConfig(userId: $userId, subscr: { proxy_count: $proxy_count }) {
+	mutation addConfig($userId: Int!, $proxy_count: Int!, $locations: Int!) {
+		addConfig(
+			userId: $userId
+			subscr: { proxy_count: $proxy_count }
+			locations: $locations
+		) {
 			config_name
 		}
 	}
