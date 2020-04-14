@@ -6,15 +6,15 @@ import Grid from '@material-ui/core/Grid';
 import { Link } from 'gatsby';
 import { Button } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
 	root: {
-		flexGrow: 1,
+		flexGrow: 1
 	},
 	paper: {
 		padding: theme.spacing(2),
 		textAlign: 'center',
-		color: theme.palette.text.secondary,
-	},
+		color: theme.palette.text.secondary
+	}
 }));
 
 const Cart = ({ location }) => {
@@ -33,33 +33,33 @@ const Cart = ({ location }) => {
 
 	const totalItems = cart.reduce((acc, x) => acc + x.quantity, 0);
 
-	const addItem = (id) => {
-		setCart((prevCart) =>
-			cart.map((x) => {
+	const addItem = id => {
+		setCart(prevCart =>
+			cart.map(x => {
 				if (x.id !== id) return x;
-				const itemIndex = prevCart.findIndex((x) => x.id === id);
+				const itemIndex = prevCart.findIndex(x => x.id === id);
 				return { ...x, quantity: prevCart[itemIndex].quantity + 1 };
 			})
 		);
 	};
 
-	const substractItem = (id) => {
-		setCart((prevCart) =>
-			cart.map((x) => {
+	const substractItem = id => {
+		setCart(prevCart =>
+			cart.map(x => {
 				if (x.id === id && x.quantity === 1) return setCart(prevCart);
 				if (x.id !== id) return x;
-				const itemIndex = prevCart.findIndex((x) => x.id === id);
+				const itemIndex = prevCart.findIndex(x => x.id === id);
 				return { ...x, quantity: prevCart[itemIndex].quantity - 1 };
 			})
 		);
 	};
 
-	const deleteItem = (id) => {
-		setCart((list) => list.filter((x) => x.id !== id));
+	const deleteItem = id => {
+		setCart(list => list.filter(x => x.id !== id));
 	};
 
 	const classes = useStyles();
-	const products = cart.map((x) => {
+	const products = cart.map(x => {
 		const price = x.price * x.quantity;
 
 		return (

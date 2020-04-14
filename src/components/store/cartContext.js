@@ -1,25 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 export const CartContext = React.createContext();
 
-// const initialCartState = {
-// 	id: '',
-// 	title: '',
-// 	description: '',
-// 	inBasket: false,
-// 	price: '',
-// 	link: '',
-// };
-
 export const CartProvider = (props) => {
-	const [cart, setCart] = useState([]);
+	const [cart, setCart] = React.useState([]);
 	const [totalPrice, setTotalPrice] = React.useState();
+	const [product, setProduct] = React.useState([
+		// {
+		// 	member_key: null,
+		// 	proxy_auth_type: null,
+		// 	interval_count: null,
+		// 	proxy_type: null,
+		// 	proxy_port: null,
+		// },
+	]);
 
 	return (
 		<CartContext.Provider
 			value={{
 				cartState: [cart, setCart],
 				totalPriceState: [totalPrice, setTotalPrice],
+				productState: [product, setProduct],
 			}}
 		>
 			{props.children}

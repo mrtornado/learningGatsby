@@ -10,7 +10,7 @@ export default function Search() {
 	const [openMenu, setOpenMenu] = useState(false);
 
 	const { loading, error, data } = useQuery(SEARCH, {
-		variables: { language: 'english' },
+		variables: { language: 'english' }
 	});
 
 	// function customTheme(theme) {
@@ -27,8 +27,8 @@ export default function Search() {
 	if (loading) return <p>Loading ...</p>;
 	if (error) return `Error! ${error.message}`;
 
-	const users = data.members.map((x) => x.username);
-	const id = data.members.map((x) => x.member_key);
+	const users = data.members.map(x => x.username);
+	const id = data.members.map(x => x.member_key);
 
 	// ARRAY MANIPULATION
 
@@ -45,8 +45,8 @@ export default function Search() {
 	// 	else return [array[0]].concat(flatten(array.slice(1)));
 	// }
 
-	const values = id.map((x) => ({ value: x }));
-	const label = users.map((x) => ({ label: x }));
+	const values = id.map(x => ({ value: x }));
+	const label = users.map(x => ({ label: x }));
 
 	const mergeData = _.merge([], values, label);
 
@@ -63,7 +63,7 @@ export default function Search() {
 		}
 	};
 
-	const handleChange = (e) => {
+	const handleChange = e => {
 		return navigate(`/admin/users/${e.value}`);
 	};
 
