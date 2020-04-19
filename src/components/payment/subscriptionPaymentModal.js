@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function AnimatedModal() {
+export default function SubscriptionPaymentModal() {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 

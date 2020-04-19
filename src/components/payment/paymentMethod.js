@@ -1,13 +1,13 @@
 import React from 'react';
-import SimpleModal from '../material/simpleModal';
-import AnimatedModal from '../material/animatedModal';
+import OneTimePaymentModal from './oneTimePaymentModal';
+import SubscriptionPaymentModal from './subscriptionPaymentModal';
 
 const PaymentMethod = () => {
 	return (
 		<div>
 			<div>Choose how you want to pay: </div>
-			<SimpleModal /> <br />
-			<AnimatedModal />
+			<OneTimePaymentModal /> <br />
+			<SubscriptionPaymentModal />
 		</div>
 	);
 };

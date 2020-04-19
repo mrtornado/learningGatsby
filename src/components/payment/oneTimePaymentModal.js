@@ -3,7 +3,7 @@ import { CartContext } from '../store/cartContext';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-import { ShowPaypalOneTimePayment } from '../payment/paypalPayments';
+import { ShowPaypalOneTimePayment } from './paypalPayments';
 import styled from 'styled-components';
 
 function rand() {
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function PaymentMethod() {
+function OneTimePaymentModal() {
 	const classes = useStyles();
 	// getModalStyle is not a pure function, we roll the style only on the first render
 	const [modalStyle] = React.useState(getModalStyle);
@@ -72,6 +72,10 @@ function PaymentMethod() {
 					Bitcoin
 				</Button>
 			</ButtonContainer>
+			<h5>
+				Don't close this page, it will close automatically when payment is
+				completed!
+			</h5>
 		</div>
 	);
 
@@ -98,4 +102,4 @@ const ButtonContainer = styled.div`
 	width: 240px;
 `;
 
-export default PaymentMethod;
+export default OneTimePaymentModal;

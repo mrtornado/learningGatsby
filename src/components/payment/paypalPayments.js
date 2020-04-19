@@ -33,21 +33,15 @@ export const ShowPaypalOneTimePayment = () => {
 					console.log(data);
 					setCart([]);
 					window.localStorage.removeItem('lsCart');
-					console.log(product);
-					addPayment({
-						variables: {
-							object: product,
-						},
-					});
+
 					navigate('/success');
 
 					// OPTIONAL: Call your server to save the transaction
 
-					return fetch('/paypal-transaction-complete', {
-						method: 'post',
-						body: JSON.stringify({
-							orderID: data.orderID,
-						}),
+					return addPayment({
+						variables: {
+							object: product,
+						},
 					});
 				}}
 			/>
