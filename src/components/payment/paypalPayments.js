@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { PayPalButton } from 'react-paypal-button-v2';
+import PayPalButton from './paypalButton';
 import { CartContext } from '../store/cartContext';
 import { navigate } from 'gatsby';
 import { ADD_CONFIG_USER } from '../../utils/graphql/userGraph';
@@ -13,39 +13,32 @@ export const ShowPaypalOneTimePayment = () => {
 	const [product] = productState;
 	const [addPayment, { data }] = useMutation(ADD_CONFIG_USER);
 
-	if (totalPrice !== 0) {
-		return (
-			<PayPalButton
-				amount={Math.round(totalPrice * 100) / 100}
-				shippingPreference='NO_SHIPPING'
-				options={{
-					clientId:
-						'AaYxV5drvEbvKKiwrz0Fmd8IPQKxHb8tPaWcu1B1EewkZwG38EhQ29e4jawlq-PJyQLyIi_VPYmnV7vg',
-					disableFunding: 'card',
-				}}
-				style={{
-					color: 'blue',
-					shape: 'pill',
-					label: 'buynow',
-				}}
-				onSuccess={(details, data) => {
-					console.log(details);
-					console.log(data);
-					setCart([]);
-					window.localStorage.removeItem('lsCart');
+	const onSuccess = (payment) => {
+		// console.log(payment);
+		setCart([]);
+		window.localStorage.removeItem('lsCart');
+		addPayment({
+			variables: {
+				object: product,
+			},
+		});
+		navigate('/success');
+	};
 
-					navigate('/success');
+	const onCancel = (data) => {
+		console.log(data);
+	};
 
-					// OPTIONAL: Call your server to save the transaction
+	const onError = (err) => {
+		console.log(err);
+	};
 
-					return addPayment({
-						variables: {
-							object: product,
-						},
-					});
-				}}
-			/>
-		);
-	}
-	return null;
+	return (
+		<PayPalButton
+			amount={Math.round(totalPrice * 100) / 100}
+			onError={onError}
+			onSuccess={onSuccess}
+			onCancel={onCancel}
+		/>
+	);
 };
