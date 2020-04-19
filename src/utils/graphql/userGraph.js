@@ -76,3 +76,11 @@ export const CONFIG_USER = gql`
 		}
 	}
 `;
+
+export const ADD_CONFIG_USER = gql`
+	mutation addConfigUser($object: [object]!) {
+		addConfigUser(object: $object) {
+			config_name
+		}
+	}
+`;

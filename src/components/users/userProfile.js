@@ -5,7 +5,7 @@ import Link from '../material/Link';
 
 export const UserProfile = () => {
 	return (
-		<Query query={CONFIGS_USER}>
+		<Query fetchPolicy='no-cache' query={CONFIGS_USER}>
 			{({ loading, error, data }) => {
 				if (loading) return 'Loading...';
 				if (error) return `Error! ${error.message}`;

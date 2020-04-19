@@ -2,12 +2,16 @@ import React, { useContext } from 'react';
 import { PayPalButton } from 'react-paypal-button-v2';
 import { CartContext } from '../store/cartContext';
 import { navigate } from 'gatsby';
+import { ADD_CONFIG_USER } from '../../utils/graphql/userGraph';
+import { useMutation } from 'react-apollo';
 
 export const ShowPaypalOneTimePayment = () => {
-	const { cartState, totalPriceState } = useContext(CartContext);
+	const { cartState, totalPriceState, productState } = useContext(CartContext);
 	// eslint-ignore-next-line
 	const [cart, setCart] = cartState;
 	const [totalPrice] = totalPriceState;
+	const [product] = productState;
+	const [addPayment, { data }] = useMutation(ADD_CONFIG_USER);
 
 	if (totalPrice !== 0) {
 		return (
@@ -29,6 +33,12 @@ export const ShowPaypalOneTimePayment = () => {
 					console.log(data);
 					setCart([]);
 					window.localStorage.removeItem('lsCart');
+					console.log(product);
+					addPayment({
+						variables: {
+							object: product,
+						},
+					});
 					navigate('/success');
 
 					// OPTIONAL: Call your server to save the transaction

@@ -10,6 +10,7 @@ const getProducts = graphql`
 			edges {
 				node {
 					id
+					proxy_count
 					mysqlId
 					title
 					price
@@ -38,8 +39,9 @@ const BuyProxies = () => {
 	// 	}
 	// }, [addtoCart]);
 
-	const addToCart = (price, title, id, quantity) => {
+	const addToCart = (price, title, id, quantity, proxy_count) => {
 		const product = {
+			proxy_count,
 			price,
 			title,
 			id,
@@ -88,7 +90,8 @@ const BuyProxies = () => {
 												document.node.price,
 												document.node.title,
 												document.node.mysqlId,
-												document.node.enabled
+												document.node.enabled,
+												document.node.proxy_count
 											)
 										}
 									>

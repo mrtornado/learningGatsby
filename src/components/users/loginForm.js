@@ -10,8 +10,8 @@ import { loginValidationSchema } from '../../utils/validationSchema';
 
 const styles = {
 	root: {
-		background: '#d22e2e'
-	}
+		background: '#d22e2e',
+	},
 };
 
 const LoginForm = (props) => {
@@ -32,22 +32,22 @@ const LoginForm = (props) => {
 							width: '400px',
 							backgroundImage: 'linear-gradient(to right, #ffe259, #ffa751)',
 							borderRadius: '10px',
-							margin: '10px'
+							margin: '10px',
 						}}
 					>
 						<h2 style={{ color: 'white' }}>Login Form</h2>
 						<Formik
 							initialValues={{
 								username: '',
-								password: ''
+								password: '',
 							}}
 							validationSchema={loginValidationSchema}
 							onSubmit={(values, { setSubmitting }) => {
 								login({
 									variables: {
 										username: values.username,
-										password: values.password
-									}
+										password: values.password,
+									},
 								})
 									.then(({ data }) => {
 										setSubmitting(false);
@@ -70,7 +70,7 @@ const LoginForm = (props) => {
 										display: 'flex',
 										alignItems: 'center',
 										flexDirection: 'column',
-										maxWidth: '300px'
+										maxWidth: '300px',
 									}}
 								>
 									<TextField
@@ -121,13 +121,13 @@ const LoginForm = (props) => {
 			<Snackbar
 				ContentProps={{
 					classes: {
-						root: classes.root
-					}
+						root: classes.root,
+					},
 				}}
 				{...other}
 				anchorOrigin={{
 					vertical: 'top',
-					horizontal: 'center'
+					horizontal: 'center',
 				}}
 				open={open}
 				onClose={() => setOpen(false)}

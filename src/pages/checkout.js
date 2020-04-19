@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext } from 'react';
 import Login from '../components/users/login';
 import PaymentMethod from '../components/payment/paymentMethod';
 import { isLoggedIn } from '../utils/auth';
@@ -11,55 +11,60 @@ import { CartContext } from '../components/store/cartContext';
 import SelectConfigOptions from '../components/payment/selectConfigOptions';
 import Button from '@material-ui/core/Button';
 import { flatten } from '../utils/arrays';
-import styled from 'styled-components';
+import Snackbar from '@material-ui/core/Snackbar';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
 		'& .MuiTextField-root': {
 			margin: theme.spacing(1),
-			width: '30ch'
-		}
+			width: '30ch',
+		},
+		'& .MuiSnackbarContent-root': {
+			background: '#d22e2e',
+		},
 	},
 	paper: {
 		padding: theme.spacing(2),
 		textAlign: 'center',
-		color: theme.palette.text.primary
-	}
+		color: theme.palette.text.primary,
+	},
 }));
 
 const period = [
 	{
 		value: '32',
-		label: '1 Month'
+		label: '1 Month',
 	},
 	{
 		value: '93',
-		label: '3 Months / 10% Discount'
+		label: '3 Months / 10% Discount',
 	},
 	{
 		value: '184',
-		label: '6 Months / 20% Discount'
+		label: '6 Months / 20% Discount',
 	},
 	{
 		value: '368',
-		label: '12 Months / 30% Discount'
-	}
+		label: '12 Months / 30% Discount',
+	},
 ];
 
-const Checkout = ({ location }) => {
+const Checkout = ({ location }, props) => {
 	const loginUser = isLoggedIn();
 	const { cartState, totalPriceState, productState } = useContext(CartContext);
-	//eslint-ignore-next-line
-	const [cart, setCart] = cartState;
+	const [cart] = cartState;
 	const [totalPrice, setTotalPrice] = totalPriceState;
 	const [product, setProduct] = productState;
 	const [currency, setCurrency] = React.useState(''); // event.targe.value & days also
-	const [submit, setSubmit] = React.useState();
+	const [submit, setSubmit] = React.useState(false);
+	const [open, setOpen] = React.useState(false);
+
+	const classes = useStyles();
 
 	React.useEffect(() => {
 		setProduct(flattenProduct);
-	}, [totalPrice]);
+	}, [currency]);
 
 	React.useEffect(() => {
 		setTotalPrice(xPrice);
@@ -67,24 +72,19 @@ const Checkout = ({ location }) => {
 
 	React.useEffect(() => {
 		setProduct(
-			cart.map(x => {
-				const gen = Math.floor(Math.random() * 53000) + 10000;
+			cart.map((x) => {
 				const prod = {
-					id: Math.floor(Math.random() * 53000) + 10000,
 					title: x.title,
-					price: x.price,
-					proxy_port: Math.floor(Math.random() * 53000) + 10000,
-					proxy_auth_type: null
+					proxy_count: x.proxy_count,
+					port: Math.floor(Math.random() * 53000) + 10000,
 				};
 
 				if (x.quantity > 1) {
-					const more = Array.from({ length: x.quantity }, y => {
+					const more = Array.from({ length: x.quantity }, (y) => {
 						const prods = {
-							id: Math.floor(Math.random() * 53000) + 10000,
 							title: x.title,
-							price: x.price,
-							proxy_port: gen,
-							proxy_auth_type: null
+							proxy_count: x.proxy_count,
+							port: Math.floor(Math.random() * 53000) + 10000,
 						};
 						return prods;
 					});
@@ -101,35 +101,41 @@ const Checkout = ({ location }) => {
 
 	const flattenProduct = flatten(product);
 
-	const handleChange = event => {
-		setCurrency(event.target.value);
-		if (event.target.value === '32') {
-			setTotalPrice(xPrice);
-		}
-		if (event.target.value === '93') {
-			const yPrice = xPrice - (xPrice * 10) / 100;
-			setTotalPrice(yPrice * 3);
-		}
-		if (event.target.value === '184') {
-			const yPrice = xPrice - (xPrice * 20) / 100;
-			setTotalPrice(yPrice * 6);
-		}
-		if (event.target.value === '368') {
-			const yPrice = xPrice - (xPrice * 30) / 100;
-			setTotalPrice(yPrice * 12);
-		}
-	};
-
-	const classes = useStyles();
-
 	const xPrice = cart.reduce((acc, x) => {
 		const price = x.quantity * x.price;
 		return acc + price;
 	}, 0);
 
+	const handleChange = (event) => {
+		setCurrency(event.target.value);
+		if (event.target.value === '32') {
+			setTotalPrice(xPrice);
+			let newArr = flattenProduct.map((x) => ({ ...x, interval: 32 }));
+			setProduct(newArr);
+		}
+		if (event.target.value === '93') {
+			const yPrice = xPrice - (xPrice * 10) / 100;
+			setTotalPrice(yPrice * 3);
+			let newArr = flattenProduct.map((x) => ({ ...x, interval: 93 }));
+			setProduct(newArr);
+		}
+		if (event.target.value === '184') {
+			const yPrice = xPrice - (xPrice * 20) / 100;
+			setTotalPrice(yPrice * 6);
+			let newArr = flattenProduct.map((x) => ({ ...x, interval: 184 }));
+			setProduct(newArr);
+		}
+		if (event.target.value === '368') {
+			const yPrice = xPrice - (xPrice * 30) / 100;
+			setTotalPrice(yPrice * 12);
+			let newArr = flattenProduct.map((x) => ({ ...x, interval: 368 }));
+			setProduct(newArr);
+		}
+	};
+
 	const totalItems = cart.reduce((acc, x) => acc + x.quantity, 0);
 
-	const products = cart.map(x => {
+	const products = cart.map((x) => {
 		const price = x.price * x.quantity;
 
 		return (
@@ -155,25 +161,30 @@ const Checkout = ({ location }) => {
 		);
 	});
 
-	const handleClick = async e => {
-		// e.preventDefault();
-		await setSubmit('none');
+	const handleClick = async (e) => {
+		const ooo = product.map((x) => {
+			if (
+				x.proxy_type &&
+				x.proxy_auth_type &&
+				x.location_key.indexOf(0) !== 0
+			) {
+				return setSubmit(true);
+			}
+			setSubmit(false);
+			setOpen(true);
+		});
+
+		return ooo;
 	};
 
 	let render;
-
 	if (currency !== '') {
-		render = cart.map((x, index) => {
-			if (x.quantity > 1) {
-				return [...Array(x.quantity)].map((e, i) => (
-					<SelectConfigOptions key={i} title={x.title} />
-				));
-			}
-			return <SelectConfigOptions key={index} title={x.title} />;
+		render = product.map((x, index) => {
+			return <SelectConfigOptions key={index} title={x.title} i={index} />;
 		});
 	}
 
-	if (submit === 'none') {
+	if (submit) {
 		render = <PaymentMethod />;
 	}
 
@@ -219,7 +230,7 @@ const Checkout = ({ location }) => {
 							onChange={handleChange}
 							helperText='Select on what period you want to pay'
 						>
-							{period.map(option => (
+							{period.map((option) => (
 								<MenuItem key={option.value} value={option.value}>
 									{option.label}
 								</MenuItem>
@@ -243,6 +254,17 @@ const Checkout = ({ location }) => {
 								{' '}
 								Submit Changes
 							</Button>
+							<Snackbar
+								className={classes.root}
+								anchorOrigin={{
+									vertical: 'top',
+									horizontal: 'center',
+								}}
+								open={open}
+								onClose={() => setOpen(false)}
+								autoHideDuration={5000}
+								message={'You have to select all options'}
+							/>
 						</div>
 					) : null}
 				</div>
