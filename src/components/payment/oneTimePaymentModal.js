@@ -5,6 +5,8 @@ import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import { ShowPaypalOneTimePayment } from './paypalPayments';
 import styled from 'styled-components';
+import { navigate } from 'gatsby';
+import CryptoJS from 'crypto-js';
 
 function rand() {
 	return Math.round(Math.random() * 20) - 10;
@@ -36,16 +38,33 @@ function OneTimePaymentModal() {
 	const classes = useStyles();
 	// getModalStyle is not a pure function, we roll the style only on the first render
 	const [modalStyle] = React.useState(getModalStyle);
-	const { totalPriceState } = useContext(CartContext);
+	const { totalPriceState, productState } = useContext(CartContext);
 	const [totalPrice] = totalPriceState;
+	const [product] = productState;
 	const [open, setOpen] = React.useState(false);
+
+	const price = CryptoJS.AES.encrypt(
+		JSON.stringify(totalPrice),
+		'worldWide9900zz'
+	).toString();
+
+	const prod = CryptoJS.AES.encrypt(
+		JSON.stringify(product),
+		'worldWide9900zz'
+	).toString();
 
 	const handleOpen = () => {
 		setOpen(true);
+		window.localStorage.setItem('t', price);
+		window.localStorage.setItem('prod', prod);
 	};
 
 	const handleClose = () => {
 		setOpen(false);
+	};
+
+	const handleBitcoin = () => {
+		navigate('/bitcoinPayment');
 	};
 
 	const body = (
@@ -67,7 +86,7 @@ function OneTimePaymentModal() {
 					fullWidth
 					variant='contained'
 					color='secondary'
-					onClick={handleOpen}
+					onClick={handleBitcoin}
 				>
 					Bitcoin
 				</Button>

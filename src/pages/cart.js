@@ -6,21 +6,22 @@ import Grid from '@material-ui/core/Grid';
 import { Link } from 'gatsby';
 import { Button } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
 	root: {
-		flexGrow: 1
+		flexGrow: 1,
 	},
 	paper: {
 		padding: theme.spacing(2),
 		textAlign: 'center',
-		color: theme.palette.text.secondary
-	}
+		color: theme.palette.text.secondary,
+	},
 }));
 
 const Cart = ({ location }) => {
-	const { cartState, totalPriceState } = useContext(CartContext);
+	const { cartState, totalPriceState, productState } = useContext(CartContext);
 	const [cart, setCart] = cartState;
 	const [totalPrice, setTotalPrice] = totalPriceState;
+	const [product, setProduct] = productState;
 
 	React.useEffect(() => {
 		setTotalPrice(xPrice);
@@ -33,44 +34,47 @@ const Cart = ({ location }) => {
 
 	const totalItems = cart.reduce((acc, x) => acc + x.quantity, 0);
 
-	const addItem = id => {
-		setCart(prevCart =>
-			cart.map(x => {
+	const addItem = (id) => {
+		setCart((prevCart) =>
+			cart.map((x) => {
 				if (x.id !== id) return x;
-				const itemIndex = prevCart.findIndex(x => x.id === id);
+				const itemIndex = prevCart.findIndex((x) => x.id === id);
 				return { ...x, quantity: prevCart[itemIndex].quantity + 1 };
 			})
 		);
 	};
 
-	const substractItem = id => {
-		setCart(prevCart =>
-			cart.map(x => {
+	const substractItem = (id) => {
+		setCart((prevCart) =>
+			cart.map((x) => {
 				if (x.id === id && x.quantity === 1) return setCart(prevCart);
 				if (x.id !== id) return x;
-				const itemIndex = prevCart.findIndex(x => x.id === id);
+				const itemIndex = prevCart.findIndex((x) => x.id === id);
 				return { ...x, quantity: prevCart[itemIndex].quantity - 1 };
 			})
 		);
 	};
 
-	const deleteItem = id => {
-		setCart(list => list.filter(x => x.id !== id));
+	const deleteItem = (id) => {
+		setCart((list) => list.filter((x) => x.id !== id));
+		setProduct((list) => list.filter((x) => x.id !== id));
+		window.localStorage.removeItem('t');
+		window.localStorage.removeItem('prod');
 	};
 
 	const classes = useStyles();
-	const products = cart.map(x => {
+	const products = cart.map((x) => {
 		const price = x.price * x.quantity;
 
 		return (
 			<div key={x.id} className={classes.root}>
 				<Grid container spacing={0}>
-					<Grid item xs={3}>
+					<Grid item xs={4}>
 						<Paper square elevation={0} className={classes.paper}>
 							{x.title}
 						</Paper>
 					</Grid>
-					<Grid item xs={3}>
+					<Grid item xs={4}>
 						<Paper square elevation={0} className={classes.paper}>
 							<button onClick={() => substractItem(x.id)}>-</button>{' '}
 							{x.quantity} <button onClick={() => addItem(x.id)}>+</button>
@@ -79,7 +83,7 @@ const Cart = ({ location }) => {
 							</span>
 						</Paper>
 					</Grid>
-					<Grid item xs={3}>
+					<Grid item xs={4}>
 						<Paper square elevation={0} className={classes.paper}>
 							${Math.round(price * 100) / 100}
 						</Paper>
@@ -105,27 +109,27 @@ const Cart = ({ location }) => {
 	return (
 		<div>
 			<Grid container spacing={3}>
-				<Grid item xs={3}>
+				<Grid item xs={4}>
 					<Paper className={classes.paper}>Product</Paper>
 				</Grid>
-				<Grid item xs={3}>
+				<Grid item xs={4}>
 					<Paper className={classes.paper}>Quantity</Paper>
 				</Grid>
-				<Grid item xs={3}>
+				<Grid item xs={4}>
 					<Paper className={classes.paper}>Price</Paper>
 				</Grid>
 			</Grid>
 			<span>{products}</span>
 			<Grid container spacing={3}>
-				<Grid item xs={3}>
+				<Grid item xs={4}>
 					<Paper elevation={0} className={classes.paper}></Paper>
 				</Grid>
-				<Grid item xs={3}>
+				<Grid item xs={4}>
 					<Paper elevation={0} className={classes.paper}>
 						Total items: {totalItems}
 					</Paper>
 				</Grid>
-				<Grid item xs={3}>
+				<Grid item xs={4}>
 					<Paper elevation={0} className={classes.paper}>
 						{' '}
 						Total Price: <b>${Math.round(totalPrice * 100) / 100} </b>

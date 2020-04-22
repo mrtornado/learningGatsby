@@ -4,13 +4,19 @@ import { CartContext } from '../store/cartContext';
 import { navigate } from 'gatsby';
 import { ADD_CONFIG_USER } from '../../utils/graphql/userGraph';
 import { useMutation } from 'react-apollo';
+import CryptoJS from 'crypto-js';
 
 export const ShowPaypalOneTimePayment = () => {
-	const { cartState, totalPriceState, productState } = useContext(CartContext);
-	// eslint-ignore-next-line
+	const { cartState } = useContext(CartContext);
+	const t = window.localStorage.getItem('t');
+	const bytes = CryptoJS.AES.decrypt(t, 'worldWide9900zz');
+	const totalPrice = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+	const prod = window.localStorage.getItem('prod');
+	const bytess = CryptoJS.AES.decrypt(prod, 'worldWide9900zz');
+	const product = JSON.parse(bytess.toString(CryptoJS.enc.Utf8));
+	// es-lint-ignore-next-line
 	const [cart, setCart] = cartState;
-	const [totalPrice] = totalPriceState;
-	const [product] = productState;
 	const [addPayment, { data }] = useMutation(ADD_CONFIG_USER);
 
 	const onSuccess = (payment) => {
