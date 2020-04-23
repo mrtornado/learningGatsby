@@ -1,11 +1,11 @@
 import { Router } from '@reach/router';
 import React from 'react';
-import PrivateRoute from '../components/privateRoute';
-import AdminProfile from '../components/admin/adminProfile';
-import Users from '../components/admin/users';
-import Search from '../components/admin/search';
-import UserEdit from '../components/admin/userEdit';
-import EditConfig from '../components/admin/editConfig';
+import PrivateRoute from '../components/PrivateRoute';
+import AdminProfile from '../components/admin/AdminProfile';
+import Users from '../components/admin/Users';
+import Search from '../components/admin/Search';
+import UserEdit from '../components/admin/UserEdit';
+import EditConfig from '../components/admin/EditConfig';
 
 const Admin = () => (
 	<React.Fragment>

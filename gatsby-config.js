@@ -16,7 +16,7 @@ module.exports = {
 		`gatsby-plugin-layout`,
 		{
 			resolve: `gatsby-plugin-create-client-paths`,
-			options: { prefixes: [`/user/*`] },
+			options: { prefixes: [`/users/*`] },
 		},
 		{
 			resolve: `gatsby-source-mysql`,

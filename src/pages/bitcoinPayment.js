@@ -1,7 +1,7 @@
 import React from 'react';
 import { isLoggedIn } from '../utils/auth';
-import Login from '../components/users/login';
-import BtcPayment from '../components/payment/btcPayment';
+import Login from '../components/users/Login';
+import BtcPayment from '../components/payment/BtcPayment';
 
 const BitcoingPayment = ({ location }) => {
 	const loginUser = isLoggedIn();

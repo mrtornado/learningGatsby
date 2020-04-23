@@ -27,7 +27,7 @@ export const UserProfile = () => {
 									if (endtime > date) {
 										return (
 											<div key={cfg.config_key}>
-												<Link to={`/user/${cfg.config_key}`}>
+												<Link to={`/users/${cfg.config_key}`}>
 													{' '}
 													{cfg.config_name}{' '}
 												</Link>{' '}

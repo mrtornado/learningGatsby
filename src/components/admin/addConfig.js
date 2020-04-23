@@ -10,26 +10,26 @@ import '../../utils/data/locations.css';
 import {
 	dedicatedLocations,
 	businessLocations,
-	trialLocations
+	trialLocations,
 } from '../../utils/data/locations';
 import { useStaticQuery, graphql } from 'gatsby';
 import _ from 'lodash';
 import { ADD_CONFIG } from '../../utils/graphql/adminGraph';
-import Container from './DropdownContainer';
+import Container from './DropDownContainer';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
 	modal: {
 		display: 'flex',
 		alignItems: 'top',
-		justifyContent: 'center'
+		justifyContent: 'center',
 	},
 	paper: {
 		backgroundColor: theme.palette.background.paper,
 		width: '640px',
 		border: '2px solid #000',
 		boxShadow: theme.shadows[5],
-		padding: theme.spacing(2, 4, 3)
-	}
+		padding: theme.spacing(2, 4, 3),
+	},
 }));
 
 export default function AddConfig(props) {
@@ -47,7 +47,7 @@ export default function AddConfig(props) {
 	`);
 
 	const userId = props.id;
-	const plans = plansProxies.allMysqlProxyPlans.edges.map(x => x.node);
+	const plans = plansProxies.allMysqlProxyPlans.edges.map((x) => x.node);
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const [proxyCount, setProxyCount] = React.useState({});
@@ -58,19 +58,19 @@ export default function AddConfig(props) {
 	); // display locations taking in consideration proxyPlan state
 	const [locations, setLocations] = React.useState('');
 
-	const plansName = plans.map(x => x.button_name);
-	const plansNumber = plans.map(x => x.ip_included);
+	const plansName = plans.map((x) => x.button_name);
+	const plansNumber = plans.map((x) => x.ip_included);
 
-	const values = plansNumber.map(x => ({ value: x }));
-	const label = plansName.map(x => ({ label: x }));
+	const values = plansNumber.map((x) => ({ value: x }));
+	const label = plansName.map((x) => ({ label: x }));
 
 	const mergeData = _.merge([], values, label);
 
 	const customStyles = {
-		container: base => ({
+		container: (base) => ({
 			...base,
-			width: 300
-		})
+			width: 300,
+		}),
 	};
 
 	const handleOpen = () => {
@@ -82,11 +82,11 @@ export default function AddConfig(props) {
 	};
 
 	const onChange = (currentNode, selectedNodes) => {
-		const loc = selectedNodes.map(x => x.value).join(',');
+		const loc = selectedNodes.map((x) => x.value).join(',');
 		setLocations(loc);
 	};
 
-	const handleChange = async e => {
+	const handleChange = async (e) => {
 		await setProxyCount(parseInt(e.value));
 		const dedicated = e.label.includes('Dedicated');
 		const trial = e.label.includes('Trial');
@@ -126,7 +126,7 @@ export default function AddConfig(props) {
 				closeAfterTransition
 				BackdropComponent={Backdrop}
 				BackdropProps={{
-					timeout: 500
+					timeout: 500,
 				}}
 			>
 				<Fade in={open}>
@@ -147,10 +147,10 @@ export default function AddConfig(props) {
 							variables={{
 								userId: userId,
 								proxy_count: proxyCount,
-								locations: locations
+								locations: locations,
 							}}
 						>
-							{addConfig => (
+							{(addConfig) => (
 								<Button
 									variant='contained'
 									color='primary'

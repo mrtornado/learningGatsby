@@ -1,8 +1,8 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { USER_EDIT } from '../../utils/graphql/adminGraph';
-import Link from '../../components/material/Link';
-import AddConfig from './addConfig';
+import Link from '../material/Link';
+import AddConfig from './AddConfig';
 
 const UserEdit = (props) => {
 	const key = parseInt(props.id);

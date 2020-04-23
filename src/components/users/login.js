@@ -8,8 +8,8 @@ import { navigate } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { isLoggedIn } from '../../utils/auth';
-import LoginForm from './loginForm';
-import RegisterForm from './registerForm';
+import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
 
 function TabContainer(props) {
 	return (
@@ -49,7 +49,7 @@ function Login(props) {
 	}
 
 	if (token) {
-		navigate('/user/profile');
+		navigate('/users/profile');
 	}
 
 	return (

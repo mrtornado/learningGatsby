@@ -6,7 +6,7 @@ import {
 import Select from 'react-select';
 import styled from 'styled-components';
 import { CartContext } from '../store/cartContext';
-import UserDropDownContainer from '../users/userDropDownContainer';
+import UserDropDownContainer from '../users/UserDropDownContainer';
 
 const SelectConfigOptions = ({ title, i }) => {
 	const { productState } = useContext(CartContext);

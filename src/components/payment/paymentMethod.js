@@ -1,6 +1,6 @@
 import React from 'react';
-import OneTimePaymentModal from './oneTimePaymentModal';
-import SubscriptionPaymentModal from './subscriptionPaymentModal';
+import OneTimePaymentModal from './OneTimePaymentModal';
+import SubscriptionPaymentModal from './SubscriptionPaymentModal';
 
 const PaymentMethod = () => {
 	return (

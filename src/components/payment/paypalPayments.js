@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import PayPalButton from './paypalButton';
+import PayPalButton from './PaypalButton';
 import { CartContext } from '../store/cartContext';
 import { navigate } from 'gatsby';
 import { ADD_CONFIG_USER } from '../../utils/graphql/userGraph';

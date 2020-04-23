@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import Login from '../components/users/login';
-import PaymentMethod from '../components/payment/paymentMethod';
+import Login from '../components/users/Login';
+import PaymentMethod from '../components/payment/PaymentMethod';
 import { isLoggedIn } from '../utils/auth';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import { CartContext } from '../components/store/cartContext';
-import SelectConfigOptions from '../components/payment/selectConfigOptions';
+import SelectConfigOptions from '../components/payment/SelectConfigOptions';
 import Button from '@material-ui/core/Button';
 import { flatten } from '../utils/arrays';
 import Snackbar from '@material-ui/core/Snackbar';

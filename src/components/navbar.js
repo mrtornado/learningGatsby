@@ -21,11 +21,12 @@ import React, { useEffect, useContext } from 'react';
 import { Query } from 'react-apollo';
 import { FaEnvelope, FaGlobeAmericas, FaUserAstronaut } from 'react-icons/fa';
 import styled from 'styled-components';
-import Link from '../components/material/Link';
+import Link from './material/Link';
 import { decodedToken, isLoggedIn } from '../utils/auth';
 import { ME } from '../utils/graphql/userGraph';
 import ShoppingCartRoundedIcon from '@material-ui/icons/ShoppingCartRounded';
-import { CartContext } from '../components/store/cartContext';
+import { CartContext } from './store/cartContext';
+import { useDarkMode } from '../theme';
 
 const drawerWidth = 180;
 
@@ -138,6 +139,7 @@ function removeToken() {
 }
 
 export default function NavBar({ children }) {
+	// const [toggleDarkMode] = useDarkMode();
 	const classes = useStyles();
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
@@ -198,7 +200,7 @@ export default function NavBar({ children }) {
 	} else {
 		leftNavBar = (
 			<List>
-				<ListItem button onClick={() => navigate('/user/profile')}>
+				<ListItem button onClick={() => navigate('/users/profile')}>
 					<ListItemIcon>
 						<FaUserAstronaut style={{ color: '#2196f3', fontSize: '30' }} />
 					</ListItemIcon>
@@ -265,6 +267,9 @@ export default function NavBar({ children }) {
 										<MenuIcon />
 									</IconButton>
 								) : null}
+								<Typography color='primary' variant='subtitle2'>
+									light
+								</Typography>
 								<Switch />
 								<Typography
 									variant='h6'
@@ -277,7 +282,6 @@ export default function NavBar({ children }) {
 										Your Private Proxy
 									</Link>
 								</Typography>
-
 								<nav>
 									<Button
 										onClick={(event) => {
@@ -324,7 +328,7 @@ export default function NavBar({ children }) {
 										<Button
 											onClick={(event) => {
 												event.preventDefault();
-												navigate('/user/login');
+												navigate('/users/login');
 											}}
 											color='secondary'
 											variant='outlined'
@@ -335,7 +339,7 @@ export default function NavBar({ children }) {
 										<Button
 											onClick={(event) => {
 												event.preventDefault();
-												navigate('/user/register');
+												navigate('/users/register');
 											}}
 											color='secondary'
 											variant='outlined'
@@ -359,7 +363,7 @@ export default function NavBar({ children }) {
 										<Button
 											onClick={(event) => {
 												event.preventDefault();
-												navigate('/user/profile');
+												navigate('/users/profile');
 											}}
 											color='secondary'
 											variant='outlined'

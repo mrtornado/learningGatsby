@@ -1,7 +1,7 @@
 import React from 'react';
 import { decodedToken } from '../../utils/auth';
-import AdminProfile from '../admin/adminProfile';
-import UserProfile from './userProfile';
+import AdminProfile from '../admin/AdminProfile';
+import UserProfile from './UserProfile';
 
 const Profile = () => {
 	const isAdmin = decodedToken();
