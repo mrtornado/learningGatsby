@@ -12,7 +12,7 @@
 		"apollo-client": "^2.6.8",
 		"apollo-link-context": "^1.0.19",
 		"apollo-link-http": "^1.5.16",
-		"axios": "^0.19.2",
+		"axios": "^0.21.1",
 		"babel-plugin-styled-components": "^1.10.7",
 		"classnames": "^2.2.6",
 		"crypto-js": "^4.0.0",
